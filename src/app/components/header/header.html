@@ -1,0 +1,42 @@
+<div class="headroom-wrapper">
+  <div appHeadroom>
+    <header [class]="theme.isDark() ? 'dark-menu header' : 'header'">
+      <a href="/" class="logo">
+        <span class="grey-color"> &lt;</span>
+        <span class="logo-name">{{ greeting.username }}</span>
+        <span class="grey-color">/&gt;</span>
+      </a>
+      <input class="menu-btn" type="checkbox" id="menu-btn" />
+      <label class="menu-icon" for="menu-btn" style="color: white">
+        <span [class]="theme.isDark() ? 'navicon navicon-dark' : 'navicon'"></span>
+      </label>
+      <ul [class]="theme.isDark() ? 'dark-menu menu' : 'menu'">
+        @if (viewSkills) {
+          <li><a href="#skills">Compétences</a></li>
+        }
+        @if (viewExperience) {
+          <li><a href="#experience">Expériences</a></li>
+        }
+        @if (viewOpenSource) {
+          <li><a href="#opensource">Open source</a></li>
+        }
+        @if (viewAchievement) {
+          <li><a href="#achievements">Certifications</a></li>
+        }
+        @if (viewBlog) {
+          <li><a href="#blogs">Articles</a></li>
+        }
+        @if (viewTalks) {
+          <li><a href="#talks">Conférences</a></li>
+        }
+        @if (viewResume) {
+          <li><a href="#resume">CV</a></li>
+        }
+        <li><a href="#contact">Me contacter</a></li>
+        <li>
+          <a><app-toggle-switch /></a>
+        </li>
+      </ul>
+    </header>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+@if (greeting.displayGreeting) {
+  <div
+    class="greet-main"
+    id="greeting"
+    appReveal="bottom"
+    [revealDuration]="1000"
+    revealDistance="40px"
+  >
+    <div class="greeting-main">
+      @if (greeting.photo; as photo) {
+        <div class="greeting-photo-div">
+          <img class="greeting-photo" [src]="photo" [alt]="'Photo de ' + greeting.username" />
+        </div>
+      }
+      <div class="greeting-text-div">
+        <div>
+          <h1 [class]="theme.isDark() ? 'dark-mode greeting-text' : 'greeting-text'">
+            {{ greeting.title }} <span class="wave-emoji"><app-emoji text="👋" /></span>
+          </h1>
+          <p [class]="theme.isDark() ? 'dark-mode greeting-text-p' : 'greeting-text-p subTitle'">
+            <app-emoji [text]="greeting.subTitle" />
+          </p>
+          <div id="resume" class="empty-div"></div>
+          <app-social-media />
+          <div class="button-greeting-div">
+            <app-button text="Me contacter" href="#contact" />
+            @if (greeting.resumeLink) {
+              <a href="assets/resume.pdf" download="Resume.pdf" class="download-link-button">
+                <app-button text="Télécharger mon CV" />
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="greeting-image-div">
+        @if (illustration.animated) {
+          <app-display-lottie path="assets/lottie/landingPerson.json" />
+        } @else {
+          <img alt="Illustration : développeur au travail" src="assets/images/manOnTable.svg" />
+        }
+      </div>
+    </div>
+  </div>
+}

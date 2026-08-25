@@ -1,0 +1,42 @@
+@if (active(); as shot) {
+  <div class="gallery">
+    <button
+      type="button"
+      class="gallery-main"
+      (click)="open()"
+      [attr.aria-label]="'Agrandir la capture : ' + shot.alt"
+    >
+      <img [src]="shot.src" [alt]="shot.alt" loading="lazy" />
+      <span class="gallery-zoom" aria-hidden="true">
+        <i class="fas fa-search-plus"></i>
+      </span>
+    </button>
+
+    @if (hasThumbs()) {
+      <div class="gallery-thumbs" role="tablist" [attr.aria-label]="'Captures de ' + projectName()">
+        @for (s of shots(); track s.src; let i = $index) {
+          <button
+            type="button"
+            role="tab"
+            class="gallery-thumb"
+            [class.is-active]="i === current()"
+            [attr.aria-selected]="i === current()"
+            [attr.aria-label]="s.alt"
+            (click)="select(i)"
+          >
+            <img [src]="s.src" [alt]="s.alt" loading="lazy" />
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  @if (zoomed()) {
+    <div class="gallery-lightbox" (click)="close()" role="dialog" aria-modal="true">
+      <img [src]="shot.src" [alt]="shot.alt" (click)="$event.stopPropagation()" />
+      <button type="button" class="gallery-close" (click)="close()" aria-label="Fermer">
+        &times;
+      </button>
+    </div>
+  }
+}

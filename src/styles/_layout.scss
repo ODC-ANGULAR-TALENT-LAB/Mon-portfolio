@@ -1,0 +1,192 @@
+@use "global-color" as *;
+
+/* --- Normalisation de la mise en page ---------------------------------
+   Le template d'origine donnait a chaque section son propre conteneur et sa
+   propre taille de titre : bords gauches decales de 10 px, titre Contact a
+   65 px contre 56 px ailleurs, espaces entre sections allant de 32 a 71 px.
+   Ce fichier est charge en dernier pour imposer une grille commune. */
+
+/* 1. Un seul conteneur pour toutes les sections. */
+.greet-main,
+.main,
+.education-section,
+.experience-container,
+.skills-container,
+.tw-main-div,
+.podcast-main-div {
+  width: min(92%, 1280px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
+/* 2. Rythme vertical constant entre les sections. */
+.main,
+.education-section,
+.experience-container,
+.skills-container {
+  margin-top: 2.25rem;
+  margin-bottom: 0;
+}
+
+.greet-main {
+  margin-top: 0.5rem;
+}
+
+.contact-margin-top {
+  margin-top: 2.25rem;
+}
+
+/* 3. Tous les titres de section au meme niveau. */
+.skills-heading,
+.education-heading,
+.experience-heading,
+.project-title,
+.contact-title,
+.blog-header-text,
+.talk-header-title,
+.podcast-header-title,
+.achievement-heading,
+.prof-title {
+  font-size: 3.2rem;
+  font-weight: 400;
+  line-height: 1.12;
+  margin: 0 0 0.6rem;
+  text-align: left;
+}
+
+/* 4. Sous-titres de section : meme traitement partout. */
+.skills-text-subtitle,
+.project-subtitle,
+.contact-subtitle,
+.blog-subtitle,
+.talk-header-subtitle,
+.podcast-header-subtitle,
+.achievement-subtitle {
+  margin: 0 0 2.25rem;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-align: left;
+}
+
+/* 5. En-tetes de section alignes a gauche comme le reste du contenu. */
+.contact-header,
+.talk-header,
+.podcast-header,
+.achievement-header,
+.blog-header {
+  text-align: left;
+}
+
+@media (max-width: 1380px) {
+  .skills-heading,
+  .education-heading,
+  .experience-heading,
+  .project-title,
+  .contact-title,
+  .blog-header-text,
+  .talk-header-title,
+  .podcast-header-title,
+  .achievement-heading,
+  .prof-title {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-heading,
+  .education-heading,
+  .experience-heading,
+  .project-title,
+  .contact-title,
+  .blog-header-text,
+  .talk-header-title,
+  .podcast-header-title,
+  .achievement-heading,
+  .prof-title {
+    font-size: 2rem;
+  }
+
+  .main,
+  .education-section,
+  .experience-container,
+  .skills-container,
+  .contact-margin-top {
+    margin-top: 3.5rem;
+  }
+}
+
+
+/* 6. Resserrage vertical.
+   Le template cumulait padding de conteneur, marges de titres et espaceurs
+   dedies : 18,5 % de la hauteur de page etait du vide. */
+
+.main,
+.greet-main {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.education-section {
+  padding-bottom: 0;
+}
+
+/* Espaceur du template, place sous l'accroche pour l'ancre #resume. */
+.empty-div {
+  margin-bottom: 12px;
+}
+
+.greeting-main > * {
+  margin-bottom: 12px;
+}
+
+.button-greeting-div {
+  margin-top: 24px;
+}
+
+/* Derniere carte de la frise : plus de retombee inutile. */
+app-education-card:last-child .education-card-body {
+  padding-bottom: 0.5rem;
+}
+
+.experience-container > div,
+.projects-container {
+  margin-top: 0;
+}
+
+.contact-grid {
+  margin-top: 1.75rem;
+}
+
+.footer-div {
+  padding: 2rem 0 1.5rem;
+}
+
+
+/* 7. Retombees internes de fin de section.
+   Une colonne flex plus haute que sa voisine laissait du vide sous la plus
+   courte ; la derniere carte de la frise et le bloc competences en gardaient
+   plusieurs dizaines de pixels. */
+
+.skills-main-div > *,
+.skills-main-div {
+  margin-bottom: 0;
+}
+
+.skills-main-div {
+  align-items: center;
+}
+
+app-education-card:last-child .education-card-body {
+  padding-bottom: 0;
+}
+
+.education-section > .education-card-container {
+  margin-bottom: 0;
+}
+
+.experience-cards-div {
+  margin-bottom: 0;
+}

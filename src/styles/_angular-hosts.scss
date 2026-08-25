@@ -1,0 +1,46 @@
+/* Les elements-hotes des composants Angular (<app-...>) n'existent pas dans la
+   version React : la ou React place directement `.certificate-card` dans une
+   grille, Angular interpose `<app-achievement-card>`, qui devient l'item de
+   grille a sa place — les cartes n'ont alors plus la meme hauteur.
+
+   `display: contents` fait disparaitre la boite de l'hote : l'element reel du
+   template redevient l'enfant direct du conteneur, exactement comme en React.
+
+   A completer si un nouveau composant est ajoute. */
+
+app-root,
+app-main,
+app-splash-screen,
+app-header,
+app-greeting,
+app-skills,
+app-skill-progress,
+app-education,
+app-work-experience,
+app-projects,
+app-startup-projects,
+app-achievement,
+app-blogs,
+app-talks,
+app-twitter-embed,
+app-podcast,
+app-profile,
+app-contact,
+app-footer,
+app-top-button,
+app-loading,
+app-social-media,
+app-software-skill,
+app-button,
+app-display-lottie,
+app-toggle-switch,
+app-achievement-card,
+app-blog-card,
+app-education-card,
+app-experience-card,
+app-talk-card,
+app-github-repo-card,
+app-github-profile-card,
+app-emoji {
+  display: contents;
+}

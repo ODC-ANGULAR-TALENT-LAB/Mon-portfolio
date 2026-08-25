@@ -1,0 +1,35 @@
+@if (skillsSection.display) {
+  <div [class]="theme.isDark() ? 'dark-mode main' : 'main'" id="skills">
+    <div class="skills-main-div">
+      <div class="skills-image-div" appReveal="left" [revealDuration]="1000">
+        @if (illustration.animated) {
+          <app-display-lottie path="assets/lottie/codingPerson.json" />
+        } @else {
+          <img alt="Illustration : développeur au travail" src="assets/images/developerActivity.svg" />
+        }
+      </div>
+      <div class="skills-text-div" appReveal="right" [revealDuration]="1000">
+        <h1 [class]="theme.isDark() ? 'dark-mode skills-heading' : 'skills-heading'">
+          {{ skillsSection.title }}
+        </h1>
+        <p
+          [class]="
+            theme.isDark()
+              ? 'dark-mode subTitle skills-text-subtitle'
+              : 'subTitle skills-text-subtitle'
+          "
+        >
+          {{ skillsSection.subTitle }}
+        </p>
+        <app-software-skill />
+        <div>
+          @for (skill of skillsSection.skills; track $index) {
+            <p [class]="theme.isDark() ? 'dark-mode subTitle skills-text' : 'subTitle skills-text'">
+              <app-emoji [text]="skill" />
+            </p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

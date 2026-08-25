@@ -1,0 +1,95 @@
+@use "global-color" as *;
+
+.dev-icons {
+  padding-left: 0;
+  list-style: none;
+  font-size: 3rem;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  text-align: center;
+}
+
+.software-skill-inline {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.software-skill-inline > i {
+  color: $subTitle;
+}
+
+.software-skill-inline > i:hover {
+  color: $skillsColor;
+}
+.software-skill-inline > p {
+  color: $subTitle;
+  font-size: 10px;
+}
+.software-skill-inline > i:hover ~ p {
+  color: $skillsColor;
+}
+
+/* --- Icônes colorées et animées ---------------------------------------
+   La couleur de marque arrive de portfolio.ts via la variable --skill-color
+   (repli sur la couleur grise du template si elle est absente).
+   Chaque icône flotte avec un décalage calculé sur son index, ce qui evite
+   un mouvement d'ensemble trop mecanique. */
+
+.software-skill-inline > i {
+  color: var(--skill-color, #{$subTitle});
+  display: inline-block;
+  animation: skill-float 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--skill-index, 0) * 0.18s);
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+  will-change: transform;
+}
+
+.software-skill-inline > p {
+  transition: color 0.25s ease;
+}
+
+.software-skill-inline:hover > i {
+  color: var(--skill-color, #{$skillsColor});
+  transform: scale(1.25) translateY(-4px);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
+  animation-play-state: paused;
+}
+
+.software-skill-inline:hover > p {
+  color: var(--skill-color, #{$skillsColor});
+  font-weight: 600;
+}
+
+/* La règle du template ciblait `i:hover ~ p` ; le survol de toute la case
+   est plus tolérant, on neutralise donc l'ancienne. */
+.software-skill-inline > i:hover ~ p {
+  color: inherit;
+}
+
+@keyframes skill-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* JavaScript en jaune vif est illisible sur fond clair : on le cerne. */
+.software-skill-inline[name='JavaScript'] > i {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.35);
+}
+
+.dark-mode .software-skill-inline[name='JavaScript'] > i {
+  -webkit-text-stroke: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .software-skill-inline > i {
+    animation: none;
+  }
+}
