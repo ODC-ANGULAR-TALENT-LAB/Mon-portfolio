@@ -142,4 +142,48 @@
   .gallery-main img {
     height: 180px;
   }
+
+  /* Les vignettes passaient a la ligne en rangees irregulieres et ne
+     mesuraient que 56 x 40 px : trop petites pour etre visees au pouce.
+     Un rail defilable, comme dans une galerie native, tient sur une ligne
+     quel que soit le nombre de captures. */
+  .gallery-thumbs {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .gallery-thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-thumb {
+    flex: 0 0 auto;
+    width: 72px;
+    height: 52px;
+    scroll-snap-align: start;
+    /* 0,55 rendait la vignette non selectionnee illisible sur petit ecran. */
+    opacity: 0.75;
+  }
+
+  /* Sans survol possible, la loupe doit rester visible. */
+  .gallery-zoom {
+    opacity: 1;
+  }
+
+  .gallery-lightbox {
+    padding: 1rem;
+  }
+
+  .gallery-close {
+    top: max(0.75rem, env(safe-area-inset-top));
+    right: 0.75rem;
+    width: 44px;
+    height: 44px;
+  }
 }

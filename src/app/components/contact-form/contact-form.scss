@@ -118,3 +118,42 @@
 .dark-mode .contact-form-status .ko {
   color: #ec7063;
 }
+
+/* --- Mobile ------------------------------------------------------------
+   Champs a 16 px minimum : sous ce seuil, Safari iOS agrandit la page a la
+   mise au point et ne revient jamais a l'echelle d'origine. */
+
+@media (max-width: 768px) {
+  :host {
+    margin-top: 1.25rem;
+  }
+
+  .contact-form {
+    gap: 1rem;
+  }
+
+  .field label {
+    font-size: 0.9rem;
+  }
+
+  .field input,
+  .field textarea {
+    padding: 0.85rem;
+    font-size: 16px;
+  }
+
+  .field textarea {
+    min-height: 8.5rem;
+  }
+
+  /* Cible franche en bas de formulaire plutot qu'un bouton cale a gauche. */
+  .contact-form-submit {
+    align-self: stretch;
+    min-height: 48px;
+    padding: 0.85rem 1.5rem;
+  }
+
+  .contact-form-submit:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}

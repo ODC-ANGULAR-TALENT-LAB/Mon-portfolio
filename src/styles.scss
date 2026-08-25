@@ -54,3 +54,6 @@
 // Normalisation de la grille et des titres : charge en dernier pour arbitrer
 // les regles de meme specificite heritees du template.
 @use "./styles/layout";
+
+// Ergonomie mobile : arbitre a son tour les paliers definis plus haut.
+@use "./styles/responsive";

@@ -6,11 +6,13 @@
         <span class="logo-name">{{ greeting.username }}</span>
         <span class="grey-color">/&gt;</span>
       </a>
-      <input class="menu-btn" type="checkbox" id="menu-btn" />
-      <label class="menu-icon" for="menu-btn" style="color: white">
+      <input class="menu-btn" type="checkbox" id="menu-btn" #menuBtn />
+      <label class="menu-icon" for="menu-btn" aria-label="Ouvrir le menu de navigation">
         <span [class]="theme.isDark() ? 'navicon navicon-dark' : 'navicon'"></span>
       </label>
-      <ul [class]="theme.isDark() ? 'dark-menu menu' : 'menu'">
+      <!-- Sur mobile le menu recouvre le contenu : chaque lien le referme,
+           sinon le panneau reste ouvert au-dessus de la section visee. -->
+      <ul [class]="theme.isDark() ? 'dark-menu menu' : 'menu'" (click)="closeMenu(menuBtn)">
         @if (viewSkills) {
           <li><a href="#skills">Compétences</a></li>
         }
@@ -33,8 +35,11 @@
           <li><a href="#resume">CV</a></li>
         }
         <li><a href="#contact">Me contacter</a></li>
-        <li>
-          <a><app-toggle-switch /></a>
+        <li class="menu-theme">
+          <a (click)="$event.stopPropagation()">
+            <span class="menu-theme-label">Thème sombre</span>
+            <app-toggle-switch />
+          </a>
         </li>
       </ul>
     </header>

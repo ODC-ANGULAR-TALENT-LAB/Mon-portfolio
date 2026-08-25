@@ -29,12 +29,41 @@ body {
   font: 19px / 23px Montserrat, "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Un mot indivisible (URL, nom de depot) ne doit pas elargir la page. */
+  overflow-wrap: break-word;
 }
-/* Media Query */
-@media (max-width: 1380px) {
+
+/* Le defilement fluide gene ceux qui ont demande moins d'animations. */
+@media (prefers-reduced-motion: reduce) {
   html,
   body {
-    font-size: rem;
-    line-height: normal;
+    scroll-behavior: auto;
+  }
+}
+
+/* Media Query */
+/* Le corps du texte suit le viewport plutot que trois paliers en dur.
+   La regle d'origine posait `font-size: rem`, valeur invalide donc ignoree. */
+@media (max-width: 1380px) {
+  body {
+    font-size: clamp(16px, 1.35vw + 12px, 19px);
+    line-height: 1.45;
+  }
+}
+
+/* Sous 768 px on borne a 16 px : en dessous, iOS zoome a la mise au point
+   d'un champ de saisie et l'utilisateur se retrouve avec une page decalee. */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+}
+
+/* Encoches et barres systeme : le contenu ne doit pas passer dessous. */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }

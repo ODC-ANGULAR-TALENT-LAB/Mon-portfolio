@@ -28,4 +28,13 @@ export class Header {
   protected readonly viewBlog = blogSection.display;
   protected readonly viewTalks = talkSection.display;
   protected readonly viewResume = resumeSection.display;
+
+  /**
+   * Referme le panneau mobile apres un clic sur un lien. Le menu repose sur
+   * une case a cocher (`.menu-btn`) : sans cela, il resterait deploye
+   * par-dessus la section vers laquelle l'ancre vient de faire defiler.
+   */
+  protected closeMenu(menuBtn: HTMLInputElement): void {
+    menuBtn.checked = false;
+  }
 }

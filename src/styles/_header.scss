@@ -1,8 +1,11 @@
 @use "global-color" as *;
 
 /*React-headroom*/
+/* Pas de `max-height` ici : la directive `appHeadroom` mesure l'en-tete et
+   pose la hauteur exacte sur ce conteneur. Un plafond fixe faisait passer
+   l'en-tete mobile (logo sur deux lignes) sous le contenu de la page. */
 .headroom-wrapper {
-  max-height: 100px;
+  min-height: 60px;
 }
 
 /* header */
@@ -157,9 +160,13 @@
   top: 0;
 }
 
-/* 48em = 768px */
+/* 56.25em = 900px.
+   Le template basculait en barre horizontale des 768 px : avec le logo scripte
+   et six entrees, le selecteur de theme repassait a la ligne et l'en-tete
+   doublait de hauteur. Sur tablette portrait le menu deroulant reste plus
+   confortable, on repousse donc la bascule a 900 px. */
 
-@media (min-width: 48em) {
+@media (min-width: 56.25em) {
   .header li {
     float: left;
   }
@@ -175,8 +182,131 @@
     display: none;
   }
 }
-@media (max-width: 960px) and (min-width: 768px) {
+/* Entre 900 et 1090 px, logo scripte (393 px) et barre de liens (651 px) ne
+   tiennent pas cote a cote : la liste repassait a la ligne et l'en-tete
+   montait a 145 px. Le template reduisait deja la police, mais s'arretait a
+   960 px — soit avant la zone qui pose probleme. */
+@media (min-width: 56.25em) and (max-width: 1090px) {
   .header {
-    font-size: 12px;
+    font-size: 14px;
+  }
+}
+
+/* --- En-tete compact : menu deroulant (< 900px) -------------------------------------------
+   Le template d'origine empilait un logo flottant de 1,5em et une icone
+   flottante a droite : sous 400 px le logo passait sur deux lignes et
+   repoussait le bouton du menu a 145 px du haut. On repasse sur une rangee
+   flex unique, le menu devenant un panneau deroulant en pleine largeur. */
+
+@media (max-width: 56.24em) {
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem max(0.75rem, env(safe-area-inset-right)) 0.5rem
+      max(0.75rem, env(safe-area-inset-left));
+  }
+
+  /* Le logo est trace dans une police scripte tres large : sa largeur suit le
+     viewport pour tenir sur une ligne, du 320 px au 767 px. */
+  .header .logo {
+    float: none;
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-top: 0;
+    font-size: clamp(13px, 4.4vw, 21px);
+    white-space: nowrap;
+  }
+
+  .header .menu-icon {
+    float: none;
+    order: 2;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border-radius: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .header .menu-icon:active {
+    background-color: $headerHoverBG;
+  }
+
+  .dark-menu .menu-icon:active {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Panneau : pleine largeur sous la rangee, defilable s'il depasse. */
+  .header .menu {
+    order: 3;
+    flex-basis: 100%;
+    clear: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* `486px` en dur coupait la liste des que toutes les sections etaient
+     actives ; on borne plutot a la place reellement disponible a l'ecran. */
+  .header .menu-btn:checked ~ .menu {
+    max-height: min(70vh, 520px);
+    padding-bottom: 0.5rem;
+  }
+
+  /* Le panneau deploye recouvre la page : sans ombre portee, son bord bas se
+     confond avec le fond blanc du contenu qu'il masque. */
+  .header:has(.menu-btn:checked) {
+    box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.35);
+  }
+
+  .dark-menu:has(.menu-btn:checked) {
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Cibles tactiles : 48 px de haut, separateurs discrets. */
+  .header li + li {
+    border-top: 1px solid rgba(127, 127, 127, 0.18);
+  }
+
+  .header li a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  /* Ligne du selecteur de theme : un intitule rend l'interrupteur explicite
+     et donne au rang une cible tactile de taille normale. */
+  .header .menu-theme a {
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: default;
+  }
+
+  /* `!important` pour battre `.dark-menu li a:hover`, qui en porte un aussi.
+     Sans cela, le rang du selecteur restait surligne en violet apres l'appui :
+     sur tactile l'etat `:hover` ne se relache pas, et ce rang-la ne referme
+     pas le menu. */
+  .header .menu-theme a:hover,
+  .dark-menu .menu-theme a:hover {
+    background-color: transparent !important;
+  }
+}
+
+/* Intitule du selecteur de theme : visible uniquement dans le menu mobile. */
+.menu-theme-label {
+  display: none;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 56.24em) {
+  .menu-theme-label {
+    display: inline;
   }
 }
