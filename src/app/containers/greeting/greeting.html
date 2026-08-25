@@ -24,10 +24,13 @@
           <app-social-media />
           <div class="button-greeting-div">
             <app-button text="Me contacter" href="#contact" />
-            @if (greeting.resumeLink) {
-              <a href="assets/resume.pdf" download="Resume.pdf" class="download-link-button">
-                <app-button text="Télécharger mon CV" />
-              </a>
+            @if (greeting.resumeLink; as cv) {
+              <app-button
+                text="Télécharger mon CV"
+                [href]="cv"
+                download="CV-BITEP-Christian.pdf"
+                className="download-link-button"
+              />
             }
           </div>
         </div>

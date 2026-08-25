@@ -44,7 +44,7 @@ export const greeting: GreetingInfo = {
     'Développeur full stack 🚀 basé à Douala. Fraîchement diplômé en génie logiciel, ' +
     'je conçois des applications web et mobiles — de la maquette au déploiement.',
   photo: 'assets/images/christian.jpg',
-  resumeLink: '',
+  resumeLink: 'assets/CV-BITEP-Christian.pdf', // vide = bouton masque
   displayGreeting: true,
 };
 
@@ -343,7 +343,7 @@ export const podcastSection: PodcastSection = {
 export const resumeSection: ResumeSection = {
   title: 'CV',
   subtitle: 'Télécharger mon CV',
-  display: false,
+  display: true,
 };
 
 // Contact
