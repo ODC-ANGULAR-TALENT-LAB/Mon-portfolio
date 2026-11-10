@@ -33,7 +33,7 @@ export const profile: Profile = {
   photo: 'assets/images/christian.jpg',
   portrait: 'assets/images/christian-cutout.webp',
   resume: 'assets/CV-BITEP-Christian.pdf',
-  siteUrl: 'https://mon-portfolio-azurethree.vercel.app',
+  siteUrl: 'https://mon-portfolio-azure-three.vercel.app',
   github: 'https://github.com/christian08-bit',
   linkedin: 'https://www.linkedin.com/in/christian-bitep-733a22328',
   languages: [

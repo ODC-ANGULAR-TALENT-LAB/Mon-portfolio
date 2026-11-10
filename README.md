@@ -2,7 +2,7 @@
 
 Portfolio de **BITEP GWODOG Christian Bernard**, développeur full stack web, mobile et cloud basé à Douala.
 
-En ligne : https://mon-portfolio-azurethree.vercel.app
+En ligne : https://mon-portfolio-azure-three.vercel.app
 
 Angular 22 (composants autonomes, signaux, `OnPush`), sans dépendance d'interface : environ 74 Ko transférés au premier chargement, polices hébergées par le site, aucun CDN.
 
