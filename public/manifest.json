@@ -1,6 +1,6 @@
 {
   "short_name": "BITEP Christian",
-  "name": "BITEP Christian — Développeur full stack",
+  "name": "Christian Bitep, développeur full stack",
   "icons": [
     {
       "src": "/favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#6c63ff",
-  "background_color": "#ffffff"
+  "theme_color": "#13203A",
+  "background_color": "#F2F4F1"
 }

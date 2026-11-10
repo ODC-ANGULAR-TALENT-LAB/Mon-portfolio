@@ -1,0 +1,53 @@
+<section class="section shell" id="expertise" aria-labelledby="expertise-title">
+  <div class="expertise-head">
+    <header class="section-head" appReveal>
+      <p class="section-kicker"><app-icon name="sparkles" /> Expertise</p>
+      <h2 class="section-title" id="expertise-title">Du front à la base de données</h2>
+      <p class="section-lede">Ce que je sais faire, et où le vérifier.</p>
+    </header>
+
+    <!-- Fenetre de code decorative : le profil resume comme un objet TypeScript. -->
+    <div class="code-window-wrap" aria-hidden="true" appReveal>
+      <div class="code-window" appTilt="10">
+        <div class="browser-bar">
+          <span class="browser-dots"><i></i><i></i><i></i></span>
+          <span class="browser-url">developer.ts</span>
+        </div>
+        <pre class="code"><code><span class="tk-k">export const</span> <span class="tk-v">christian</span> = {{ '{' }}
+  <span class="tk-p">role</span>: <span class="tk-s">'Full stack'</span>,
+  <span class="tk-p">front</span>: [<span class="tk-s">'Angular'</span>, <span class="tk-s">'React'</span>, <span class="tk-s">'Vue'</span>],
+  <span class="tk-p">back</span>: [<span class="tk-s">'NestJS'</span>, <span class="tk-s">'.NET'</span>, <span class="tk-s">'Spring'</span>],
+  <span class="tk-p">mobile</span>: [<span class="tk-s">'Flutter'</span>, <span class="tk-s">'React Native'</span>],
+  <span class="tk-p">data</span>: [<span class="tk-s">'PostgreSQL'</span>, <span class="tk-s">'RAG'</span>],
+  <span class="tk-p">ships</span>: <span class="tk-n">true</span>,
+{{ '}' }} <span class="tk-k">satisfies</span> <span class="tk-t">Developer</span>;<span class="code-caret"></span></code></pre>
+        <span class="tilt-glare"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="expertise-grid" appSpotlight>
+    @for (area of areas; track area.name; let i = $index) {
+      <div class="expertise-area" [style.--i]="i" appReveal appSpotlight>
+        <span class="expertise-icon" aria-hidden="true"><app-icon [name]="area.icon" /></span>
+        <h3>{{ area.name }}</h3>
+        <p>{{ area.description }}</p>
+        <ul class="expertise-tools" [attr.aria-label]="'Outils : ' + area.name">
+          @for (t of area.tools; track t) {
+            <li><app-tech-logo [name]="t" [label]="true" /></li>
+          }
+        </ul>
+        <p class="expertise-proof">
+          Mis en œuvre dans
+          @for (proof of area.proofs; track proof.label; let last = $last) {
+            @if (proof.href) {
+              <a [href]="proof.href">{{ proof.label }}</a>
+            } @else {
+              <span>{{ proof.label }}</span>
+            }{{ last ? '.' : ',' }}
+          }
+        </p>
+      </div>
+    }
+  </div>
+</section>

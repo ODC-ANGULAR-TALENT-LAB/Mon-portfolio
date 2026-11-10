@@ -1,0 +1,518 @@
+/* Parcours */
+
+.timeline {
+  position: relative;
+  --node: 2.75rem;
+}
+
+/* Ligne verticale en degrade, qui se trace a l'apparition de la frise. */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--node) / 2 - 1px);
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--accent-2) 60%, transparent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.6s var(--ease-out) 0.2s;
+}
+
+.timeline.is-in::before {
+  transform: scaleY(1);
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) minmax(0, 3fr);
+  gap: 0.5rem clamp(2rem, 5vw, 4rem);
+  padding: 1.75rem 0 1.75rem calc(var(--node) + 1.5rem);
+}
+
+.timeline-item + .timeline-item {
+  border-top: 1px dashed var(--rule);
+}
+
+.timeline-node {
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 1.2rem;
+  box-shadow: 0 0 0 6px var(--paper);
+  transition:
+    transform 0.4s var(--ease-out),
+    border-color 0.3s;
+}
+
+.timeline-item:hover .timeline-node {
+  transform: scale(1.12) rotate(-8deg);
+  border-color: var(--accent);
+}
+
+.timeline-period {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-body {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 44rem;
+}
+
+.timeline-role {
+  font-size: var(--step-2);
+}
+
+.timeline-org {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: -0.25rem;
+  color: var(--muted);
+}
+
+.kind {
+  padding: 0.05rem 0.5rem;
+  border-radius: var(--radius-s);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.kind-formation {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+
+@media (max-width: 40rem) {
+  .timeline-item {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-period {
+    color: var(--accent);
+  }
+}
+
+/* Expertise */
+
+.expertise-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem clamp(2rem, 5vw, 5rem);
+  margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+}
+
+.expertise-head .section-head {
+  margin-bottom: 0;
+}
+
+@media (max-width: 56rem) {
+  .expertise-head {
+    grid-template-columns: 1fr;
+  }
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+}
+
+/* Carte a bordure lumineuse : un halo suit la souris le long du contour. */
+.expertise-area {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 1.6rem 1.6rem 1.75rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background:
+    radial-gradient(
+        420px circle at var(--mx, -500px) var(--my, -500px),
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        transparent 45%
+      )
+      var(--surface);
+}
+
+.expertise-area::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, -500px) var(--my, -500px),
+    var(--accent),
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.expertise-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.4rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--accent) 80%, transparent);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.expertise-area:hover .expertise-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.expertise-area h3 {
+  font-size: var(--step-2);
+}
+
+.expertise-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-block: 0.2rem 0.3rem;
+}
+
+.expertise-tools li {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.expertise-proof {
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.expertise-proof a {
+  color: var(--accent);
+}
+
+/* Certifications */
+
+.cert-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14.5rem), 1fr));
+  gap: 2.5rem 1.75rem;
+}
+
+.cert {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.cert:first-child {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.cert:first-child h3 {
+  font-size: var(--step-3);
+}
+
+.cert-thumb {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: #fff;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.cert-body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cert-body h3 {
+  font-size: var(--step-1);
+}
+
+.cert-issuer {
+  font-weight: 500;
+}
+
+.cert-meta {
+  color: var(--muted);
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+
+.cert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-self: start;
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+@media (max-width: 40rem) {
+  .cert:first-child {
+    grid-template-columns: 1fr;
+  }
+}
+
+.credentials-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 3rem clamp(2rem, 5vw, 5rem);
+  margin-top: clamp(3.5rem, 3rem + 3vw, 5.5rem);
+}
+
+@media (max-width: 52rem) {
+  .credentials-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.degree-list {
+  border-top: 2px solid var(--ink);
+}
+
+.degree-list li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.15rem 1.5rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.degree-period {
+  grid-row: span 2;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.degree-title {
+  font-weight: 600;
+}
+
+.degree-school {
+  color: var(--muted);
+}
+
+@media (max-width: 30rem) {
+  .degree-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .degree-period {
+    grid-row: auto;
+    color: var(--accent);
+  }
+}
+
+.language-list {
+  border-top: 2px solid var(--ink);
+}
+
+.language-list > div {
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.language-list dt {
+  font-weight: 600;
+}
+
+.language-list dd {
+  color: var(--muted);
+}
+
+/* Contact */
+
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 3rem clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.contact-intro {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.contact-email {
+  justify-self: start;
+  margin-top: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 0.6rem + 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.18em;
+}
+
+.contact-channels {
+  display: grid;
+  border-top: 1px solid var(--rule);
+}
+
+.contact-channels a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.contact-channels app-icon {
+  color: var(--accent);
+  font-size: 1.125rem;
+}
+
+@media (max-width: 52rem) {
+  .contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Formulaire */
+
+.contact-form {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--surface);
+}
+
+.contact-form-title {
+  font-size: var(--step-2);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  transition: border-color 0.2s;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-color: var(--muted);
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+
+.field [aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: var(--step--1);
+}
+
+.contact-form-submit {
+  justify-self: start;
+  min-height: 2.875rem;
+  padding: 0.6rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.contact-form-submit:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.contact-form-submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.contact-form-status:empty {
+  display: none;
+}
+
+.contact-form-status .ok {
+  color: var(--accent);
+}
+
+.contact-form-status .ko {
+  color: var(--danger);
+}
+
+/* Champ piege anti-robots : hors de l'ecran, jamais vu ni atteint au clavier. */
+.field-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

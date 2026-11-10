@@ -1,0 +1,64 @@
+<div class="browser gallery-frame" appTilt="4">
+  <div class="browser-bar">
+    <span class="browser-dots"><i></i><i></i><i></i></span>
+    <span class="browser-url">{{ domain() }}</span>
+  </div>
+  <button
+    type="button"
+    class="gallery-main"
+    (click)="open()"
+    [attr.aria-label]="'Agrandir : ' + current().alt"
+    [style.aspect-ratio]="current().ratio ?? 1.6"
+  >
+    <img [src]="current().src" [alt]="current().alt" loading="lazy" decoding="async" />
+    <span class="gallery-expand"><app-icon name="expand" /></span>
+  </button>
+  <span class="tilt-glare" aria-hidden="true"></span>
+</div>
+
+@if (shots().length > 1) {
+  <ul class="gallery-thumbs" [attr.aria-label]="'Captures de ' + name()">
+    @for (s of shots(); track s.src; let i = $index) {
+      <li>
+        <button
+          type="button"
+          [class.is-current]="index() === i"
+          [attr.aria-current]="index() === i ? 'true' : null"
+          [attr.aria-label]="'Capture ' + (i + 1) + ' sur ' + shots().length + ' : ' + s.alt"
+          (click)="select(i)"
+        >
+          <img [src]="s.src" alt="" loading="lazy" decoding="async" />
+        </button>
+      </li>
+    }
+  </ul>
+}
+
+<dialog
+  #dialog
+  class="lightbox"
+  [attr.aria-label]="name() + ', captures'"
+  (keydown)="onDialogKey($event)"
+  (click)="onDialogClick($event)"
+>
+  <figure class="lightbox-figure">
+    <img [src]="current().src" [alt]="current().alt" />
+    <figcaption>
+      <span>{{ current().alt }}</span>
+      @if (shots().length > 1) {
+        <span class="lightbox-count">{{ index() + 1 }} / {{ shots().length }}</span>
+      }
+    </figcaption>
+  </figure>
+  <button type="button" class="lightbox-close" (click)="close()" aria-label="Fermer">
+    <app-icon name="close" />
+  </button>
+  @if (shots().length > 1) {
+    <button type="button" class="lightbox-nav lightbox-prev" (click)="step(-1)" aria-label="Capture précédente">
+      <app-icon name="prev" />
+    </button>
+    <button type="button" class="lightbox-nav lightbox-next" (click)="step(1)" aria-label="Capture suivante">
+      <app-icon name="next" />
+    </button>
+  }
+</dialog>

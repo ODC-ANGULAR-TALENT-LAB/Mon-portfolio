@@ -1,0 +1,77 @@
+<section class="section shell" id="projets" aria-labelledby="projets-title">
+  <header class="section-head" appReveal>
+    <p class="section-kicker"><app-icon name="code" /> Projets</p>
+    <h2 class="section-title" id="projets-title">Études de cas</h2>
+    <p class="section-lede">
+      Pour chaque produit : le problème de départ, ce que j’ai construit, et les choix
+      techniques que je défendrais en revue de code.
+    </p>
+  </header>
+
+  @for (p of projects; track p.id; let n = $index) {
+    <article class="case" [id]="'case-' + p.id" [attr.aria-labelledby]="'case-title-' + p.id">
+      <div class="case-aside" appReveal>
+        <p class="case-index" aria-hidden="true">{{ (n + 1).toString().padStart(2, '0') }}</p>
+        <h3 class="case-title" [id]="'case-title-' + p.id">{{ p.name }}</h3>
+        <p class="case-summary">{{ p.summary }}</p>
+
+        <dl class="case-facts">
+          <div>
+            <dt>Plateformes</dt>
+            <dd>{{ p.platforms.join(', ') }}</dd>
+          </div>
+          <div>
+            <dt>Technologies</dt>
+            <dd>
+              <ul class="tags">
+                @for (t of p.stack; track t) {
+                  <li><app-tech-logo [name]="t" [label]="true" /></li>
+                }
+              </ul>
+            </dd>
+          </div>
+        </dl>
+
+        @for (l of p.links; track l.url) {
+          <a class="case-link" [href]="l.url" target="_blank" rel="noopener">
+            {{ l.label }} <app-icon name="external" />
+          </a>
+        }
+      </div>
+
+      <div class="case-body">
+        <div appReveal>
+          <app-gallery [shots]="p.shots" [name]="p.name" [domain]="p.domain ?? p.name" />
+        </div>
+
+        <div class="case-text" appReveal>
+          <h4>Le problème</h4>
+          <p>{{ p.problem }}</p>
+
+          <h4>Ce que j’ai construit</h4>
+          <ul class="case-list">
+            @for (b of p.built; track $index) {
+              <li>{{ b }}</li>
+            }
+          </ul>
+
+          <h4>Choix techniques</h4>
+          <ul class="case-list case-list-decisions">
+            @for (d of p.decisions; track $index) {
+              <li>{{ d }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </article>
+  }
+
+  <aside class="other-work" aria-labelledby="other-work-title" appReveal>
+    <h3 id="other-work-title">Autres réalisations</h3>
+    <ul>
+      @for (w of otherWork; track w; let i = $index) {
+        <li [style.--i]="i">{{ w }}</li>
+      }
+    </ul>
+  </aside>
+</section>

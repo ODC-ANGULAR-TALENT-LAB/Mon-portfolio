@@ -1,9 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { contactForm, contactInfo } from '../../core/portfolio';
+import { contactForm, profile } from '../../core/content';
 
 type SendState = 'idle' | 'sending' | 'sent' | 'error';
+
+/** Reponse de FormSubmit : `success` est une chaine, pas un booleen. */
+interface FormSubmitResponse {
+  success?: string | boolean;
+  message?: string;
+}
 
 /**
  * Formulaire de contact.
@@ -11,8 +17,8 @@ type SendState = 'idle' | 'sending' | 'sent' | 'error';
  * Un site Angular compile en fichiers statiques ne peut pas envoyer d'e-mail
  * par lui-meme : il faut un service qui recoive le formulaire. Deux modes :
  *
- *  - `contactForm.endpoint` renseigne (Formspree, Web3Forms, Brevo...) :
- *    le message est envoye en arriere-plan, l'utilisateur ne quitte pas la page ;
+ *  - `contactForm.endpoint` renseigne (FormSubmit) : le message est envoye
+ *    en arriere-plan et arrive dans la boite mail, le visiteur reste sur la page ;
  *  - endpoint vide : repli sur `mailto:` — le message est pre-rempli dans le
  *    logiciel de messagerie du visiteur, qui n'a plus qu'a l'envoyer.
  *
@@ -22,7 +28,7 @@ type SendState = 'idle' | 'sending' | 'sent' | 'error';
   selector: 'app-contact-form',
   imports: [ReactiveFormsModule],
   templateUrl: './contact-form.html',
-  styleUrl: './contact-form.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactForm {
   private readonly fb = inject(FormBuilder);
@@ -30,12 +36,14 @@ export class ContactForm {
 
   protected readonly state = signal<SendState>('idle');
   protected readonly usesMailto = !contactForm.endpoint;
-  protected readonly contactEmail = contactInfo.email_address;
+  protected readonly contactEmail = profile.email;
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     message: ['', [Validators.required, Validators.minLength(10)]],
+    /** Champ piege, invisible pour un humain : un robot qui le remplit est ignore. */
+    website: [''],
   });
 
   protected invalid(field: 'name' | 'email' | 'message'): boolean {
@@ -49,23 +57,43 @@ export class ContactForm {
       return;
     }
 
-    const { name, email, message } = this.form.getRawValue();
+    const { name, email, message, website } = this.form.getRawValue();
+    if (website) {
+      // Robot : on fait comme si tout s'etait bien passe, sans rien envoyer.
+      this.state.set('sent');
+      return;
+    }
 
     if (this.usesMailto) {
       const subject = `Message de ${name} — portfolio`;
       const body = `${message}\n\n—\n${name}\n${email}`;
       window.location.href =
-        `mailto:${contactInfo.email_address}` +
+        `mailto:${profile.email}` +
         `?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       this.state.set('sent');
       return;
     }
 
     this.state.set('sending');
+    const payload = {
+      name,
+      email,
+      message,
+      _subject: `Portfolio : nouveau message de ${name}`,
+      _replyto: email, // « Repondre » dans Gmail ecrit directement au visiteur
+      _template: 'table',
+      _captcha: 'false',
+    };
     this.http
-      .post(contactForm.endpoint, { name, email, message, _subject: `Message de ${name}` })
+      .post<FormSubmitResponse>(contactForm.endpoint, payload, {
+        headers: new HttpHeaders({ Accept: 'application/json' }),
+      })
       .subscribe({
-        next: () => {
+        next: (res) => {
+          if (res?.success === false || res?.success === 'false') {
+            this.state.set('error');
+            return;
+          }
           this.state.set('sent');
           this.form.reset();
         },
