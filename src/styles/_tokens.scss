@@ -1,0 +1,71 @@
+/* Jetons de design. Les couleurs ne sont que des variables : le theme sombre
+   les redefinit, aucun composant ne teste le theme lui-meme.
+
+   Palette : encre bleu nuit, papier froid, vert du Wouri en accent. */
+
+:root {
+  --paper: #f2f4f1;
+  --surface: #fbfcfa;
+  --ink: #13203a;
+  --muted: #566176;
+  --rule: #d5dbd6;
+  --accent: #0e7a5c;
+  --accent-ink: #ffffff;
+  --accent-soft: #dcefe6;
+  --accent-2: #0891b2;
+  --grid-line: rgb(19 32 58 / 0.07);
+  --glow-1: rgb(14 122 92 / 0.16);
+  --danger: #b42318;
+  --shadow: 0 1px 2px rgb(19 32 58 / 0.06), 0 12px 32px -12px rgb(19 32 58 / 0.18);
+
+  --font-display: 'Sora Variable', 'Segoe UI', sans-serif;
+  --font-body: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Echelle typographique (rapport 1,25) */
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5625rem;
+  --step-3: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
+  --step-4: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
+  --step-hero: clamp(3.4rem, 1.2rem + 8.6vw, 8.25rem);
+
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --section-gap: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  --radius-s: 4px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --header-h: 4rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+}
+
+@mixin dark-palette {
+  --paper: #0d1626;
+  --surface: #132036;
+  --ink: #e6ebee;
+  --muted: #9aa6b8;
+  --rule: #26344c;
+  --accent: #43c59b;
+  --accent-ink: #0d1626;
+  --accent-soft: #15352f;
+  --accent-2: #38bdf8;
+  --grid-line: rgb(230 235 238 / 0.06);
+  --glow-1: rgb(67 197 155 / 0.18);
+  --danger: #f97066;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+/* Sans JavaScript (ou avant le script), on suit le systeme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-palette;
+  }
+}
+
+:root[data-theme='dark'] {
+  @include dark-palette;
+}

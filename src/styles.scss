@@ -1,59 +1,11 @@
-/* Feuille de styles globale.
-   Les styles du projet React etaient globaux (CRA n'encapsule pas les .scss
-   simples) : on reproduit ce comportement plutot que d'utiliser des styles de
-   composant scopes.
+/* Styles globaux. Chaque partiel a son propre prefixe de classes
+   (.site-*, .hero-*, .product-*, .case-*, .timeline-*, .cert-*...) : aucune
+   regle n'en ecrase une autre, l'ordre ci-dessous n'est qu'un ordre de lecture. */
 
-   ATTENTION : l'ordre ci-dessous n'est pas arbitraire. Il reproduit l'ordre
-   d'evaluation des modules React (index.js -> App.js -> Main.js et ses
-   imports). Plusieurs regles ont la meme specificite et ne sont departagees
-   que par leur position : par exemple `.dark-mode` (Main.scss) doit passer
-   APRES `.project-card`, `.certificate-card` et `.blog-card`, sinon les
-   cartes restent blanches en theme sombre. Main.scss vient donc en dernier,
-   comme `import "./Main.scss"` est la derniere ligne d'import de Main.js. */
-
-@use "./styles/index-base"; // index.css
-@use "./styles/app"; // App.scss
-@use "./styles/angular-hosts"; // neutralise les hotes <app-...>
-
-// Main.js, dans l'ordre de ses imports
-@use "./styles/header";
-@use "./styles/toggle-switch";
-@use "./styles/greeting";
-@use "./styles/loading";
-@use "./styles/social-media";
-@use "./styles/button";
-@use "./styles/skills";
-@use "./styles/software-skill";
-@use "./styles/progress";
-@use "./styles/work-experience";
-@use "./styles/experience-card";
-@use "./styles/project";
-@use "./styles/startup-projects";
-@use "./styles/achievement";
-@use "./styles/achievement-card";
-@use "./styles/blog";
-@use "./styles/blog-card";
-@use "./styles/footer";
-@use "./styles/talks";
-@use "./styles/talk-card";
-@use "./styles/podcast";
-@use "./styles/education";
-@use "./styles/education-card";
-@use "./styles/top";
-@use "./styles/twitter";
-@use "./styles/contact";
-@use "./styles/splash-screen";
-
-// Composants charges paresseusement cote React (donc injectes apres)
-@use "./styles/github-repo-card";
-@use "./styles/github-profile-card";
-
-// Main.scss porte `.dark-mode` : il doit passer apres les styles de section
-@use "./styles/main";
-
-// Normalisation de la grille et des titres : charge en dernier pour arbitrer
-// les regles de meme specificite heritees du template.
-@use "./styles/layout";
-
-// Ergonomie mobile : arbitre a son tour les paliers definis plus haut.
-@use "./styles/responsive";
+@use './styles/tokens';
+@use './styles/base';
+@use './styles/header';
+@use './styles/hero';
+@use './styles/case';
+@use './styles/sections';
+@use './styles/motion';

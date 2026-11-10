@@ -1,0 +1,119 @@
+<section class="hero-wrap" id="top" aria-labelledby="hero-name" appSpotlight>
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+  </div>
+
+  <div class="hero shell">
+    <div class="hero-intro">
+      <h1 class="hero-name" id="hero-name">
+        <span class="hero-name-line">Christian</span>
+        <span class="hero-name-line">Bitep</span>
+      </h1>
+      <p class="hero-role">
+        Développeur full stack à {{ profile.location }}.<br />
+        Je construis des <app-type-rotator [words]="profile.roles" />
+      </p>
+      <p class="hero-pitch">{{ profile.pitch }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-glow" href="#contact">Me contacter</a>
+        <a class="btn" [href]="profile.resume" download>
+          <app-icon name="download" /> Télécharger le CV
+        </a>
+      </div>
+    </div>
+
+    <div class="portrait-stage">
+      <div class="portrait-3d">
+        <div class="orbit" aria-hidden="true">
+          @for (name of orbit; track name; let i = $index) {
+            <span class="orbit-item" [style.--a.deg]="i * orbitStep">
+              <span class="orbit-chip"><app-tech-logo [name]="name" /></span>
+            </span>
+          }
+        </div>
+        <figure class="hero-portrait">
+          <img
+            [src]="profile.portrait"
+            [alt]="'Portrait de ' + profile.legalName"
+            width="1066"
+            height="1195"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <dl class="stats">
+      @for (s of stats; track s.label) {
+        <div class="stat">
+          <dt class="stat-label">{{ s.label }}</dt>
+          <dd class="stat-value" [appCountUp]="s.value"></dd>
+        </div>
+      }
+    </dl>
+  </div>
+
+  <a class="scroll-cue" href="#projets-index" aria-label="Voir les produits">
+    <app-icon name="arrowDown" />
+  </a>
+</section>
+
+<section class="product-index shell" id="projets-index" aria-labelledby="index-title" appReveal>
+  <h2 class="product-index-title" id="index-title">
+    <app-icon name="code" /> Produits conçus et livrés
+  </h2>
+
+  <div class="product-index-layout">
+    <ul class="product-index-list">
+      @for (p of projects; track p.id; let i = $index) {
+        <li [class.is-active]="active() === i" [style.--i]="i">
+          <a
+            class="product-row"
+            [href]="'#case-' + p.id"
+            (mouseenter)="active.set(i)"
+            (focus)="active.set(i)"
+          >
+            <span class="product-row-name">{{ p.name }}</span>
+            <span class="product-row-summary">{{ p.summary }}</span>
+            <span class="product-row-stack" aria-hidden="true">
+              @for (t of p.stack.slice(0, 5); track t) {
+                <app-tech-logo [name]="t" />
+              }
+            </span>
+            <span class="product-row-meta">
+              <span class="status status-{{ p.status }}">{{ statusLabel[p.status] }}</span>
+              @if (p.domain) {
+                <span class="product-row-domain">{{ p.domain }}</span>
+              }
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="product-preview-wrap" aria-hidden="true">
+      <div class="browser product-preview" appTilt="6">
+        <div class="browser-bar">
+          <span class="browser-dots"><i></i><i></i><i></i></span>
+          <span class="browser-url">{{ projects[active()].domain ?? projects[active()].name }}</span>
+        </div>
+        <div class="product-preview-shots">
+          @for (p of projects; track p.id; let i = $index) {
+            <img
+              [src]="p.shots[0].src"
+              alt=""
+              width="1200"
+              height="750"
+              [class.is-visible]="active() === i"
+              [attr.loading]="i === 0 ? null : 'lazy'"
+            />
+          }
+        </div>
+        <span class="tilt-glare"></span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 <form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <h3 class="contact-form-title">Laissez-moi un message</h3>
+  <h3 class="contact-form-title">Envoyer un message</h3>
 
   <div class="field">
     <label for="cf-name">Votre nom</label>
@@ -49,8 +49,13 @@
     }
   </div>
 
+  <div class="field-trap" aria-hidden="true">
+    <label for="cf-website">Ne pas remplir</label>
+    <input id="cf-website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+  </div>
+
   <button type="submit" class="contact-form-submit" [disabled]="state() === 'sending'">
-    {{ state() === 'sending' ? 'Envoi…' : 'Envoyer' }}
+    {{ state() === 'sending' ? 'Envoi en cours…' : 'Envoyer le message' }}
   </button>
 
   <p class="contact-form-status" role="status" aria-live="polite">

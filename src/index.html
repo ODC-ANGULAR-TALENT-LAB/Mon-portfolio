@@ -5,46 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <base href="/" />
 
-    <title>BITEP Christian — Développeur full stack</title>
-    <meta name="title" content="BITEP Christian — Développeur full stack" />
+    <title>Christian Bitep, développeur full stack à Douala</title>
     <meta
       name="description"
-      content="Portfolio de BITEP Christian, développeur full stack basé à Douala : applications web et mobiles (Angular, React, Vue/Nuxt, React Native), back-end Python et Java."
+      content="Christian Bitep conçoit et met en ligne des produits web et mobiles complets : ChatDocs OHADA (assistant juridique IA), MENWORK Cameroun, DIMFitness, CotisantéCM. Angular, NestJS, .NET, PostgreSQL."
     />
+    <link rel="canonical" href="https://mon-portfolio-azurethree.vercel.app/" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    
-    <meta property="og:title" content="BITEP Christian — Développeur full stack" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content="https://mon-portfolio-azurethree.vercel.app/" />
+    <meta property="og:title" content="Christian Bitep, développeur full stack à Douala" />
     <meta
       property="og:description"
-      content="Portfolio de BITEP Christian, développeur full stack basé à Douala : applications web et mobiles (Angular, React, Vue/Nuxt, React Native), back-end Python et Java."
+      content="Produits web et mobiles livrés, de la base de données à l'application Android. Études de cas, parcours et certifications."
     />
+    <meta property="og:image" content="https://mon-portfolio-azurethree.vercel.app/assets/images/christian.jpg" />
+    <meta name="twitter:card" content="summary" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    
-    <meta property="twitter:title" content="BITEP Christian — Développeur full stack" />
-    <meta
-      property="twitter:description"
-      content="Portfolio de BITEP Christian, développeur full stack basé à Douala : applications web et mobiles (Angular, React, Vue/Nuxt, React Native), back-end Python et Java."
-    />
-
-    <meta name="msapplication-TileColor" content="#603cba" />
-    <meta name="theme-color" content="#6c63ff" />
+    <meta name="theme-color" content="#F2F4F1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0D1626" media="(prefers-color-scheme: dark)" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#885bd5" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
 
-    <link rel="preload" href="/assets/fonts/Montserrat-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/assets/fonts/Agustina.woff" as="font" type="font/woff" crossorigin />
+    <!-- Applique le theme avant le premier rendu : pas de flash clair en mode sombre. -->
+    <script>
+      (function () {
+        var t;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "BITEP GWODOG Christian Bernard",
+        "alternateName": "Christian Bitep",
+        "jobTitle": "Développeur full stack",
+        "url": "https://mon-portfolio-azurethree.vercel.app/",
+        "image": "https://mon-portfolio-azurethree.vercel.app/assets/images/christian.jpg",
+        "email": "mailto:christianbitep8@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Douala", "addressCountry": "CM" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "IUT de Douala" },
+        "knowsAbout": ["Angular", "NestJS", ".NET", "PostgreSQL", "React Native", "RAG", "Développement web", "Développement mobile"],
+        "sameAs": [
+          "https://github.com/christian08-bit",
+          "https://www.linkedin.com/in/christian-bitep-733a22328"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <noscript>Ce site nécessite JavaScript pour fonctionner.</noscript>
+    <noscript>
+      <p style="padding: 2rem; font-family: sans-serif">
+        Ce site a besoin de JavaScript. Mon CV est aussi disponible en
+        <a href="assets/CV-BITEP-Christian.pdf">PDF</a>, et je réponds à christianbitep8@gmail.com.
+      </p>
+    </noscript>
     <app-root></app-root>
   </body>
 </html>
